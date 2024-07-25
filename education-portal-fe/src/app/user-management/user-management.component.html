@@ -1,0 +1,87 @@
+<div class="header">
+  <div>
+    <label>Username:</label>
+    <input
+      type="text"
+      nz-input
+      placeholder="Input user name"
+      [(ngModel)]="usernameFilter"
+      (ngModelChange)="userManagementStore.searchUsername($event)"
+    />
+  </div>
+  <div>
+    <label>Role: </label>
+    <nz-select
+      [(ngModel)]="roleFilter"
+      (ngModelChange)="userManagementStore.changeRoleFilter($event)"
+      nzAllowClear
+    >
+      @for (item of userRoleOptions; track item.value) {
+      <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+      }
+    </nz-select>
+  </div>
+  <div>
+    <label>Status:</label>
+    <nz-select
+      [(ngModel)]="statusFilter"
+      (ngModelChange)="userManagementStore.changeActiveStatusFilter($event)"
+    >
+      @for (item of userStatusOptions; track item.value) {
+      <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+      }
+    </nz-select>
+  </div>
+  <button nz-button nzType="primary" (click)="openCreateUserModal()">Create User</button>
+</div>
+@if (userManagementStore.vm(); as vm) {
+<nz-table
+  [nzScroll]="{ x: '600px' }"
+  #userTable
+  [nzShowPagination]="true"
+  [nzFrontPagination]="false"
+  [nzData]="vm.items"
+  [nzLoading]="userManagementStore.isLoading()"
+  [nzPageIndex]="vm.pageIndex"
+  [nzPageSize]="vm.pageSize"
+  [nzTotal]="vm.totalCount"
+  (nzPageIndexChange)="userManagementStore.changePageIndex($event)"
+>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of userTable.data; track item.id) {
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.username }}</td>
+      <td>{{ item.role }}</td>
+      <td>{{ item.isActive ? "Active" : "Inactive" }}</td>
+      <td>
+        <div class="btn-group">
+          <button
+            nz-button
+            nz-popconfirm
+            nzDanger
+            [nzPopconfirmTitle]="
+              item.isActive ? 'Are you sure delete this user?' : 'Are you sure active this user?'
+            "
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="userManagementStore.updateUserActiveStatus(item.id)"
+          >
+            {{ item.isActive ? "Delete User" : "Active User" }}
+          </button>
+          <button nz-button nzType="primary" (click)="openUpdateUserModal(item)">Update</button>
+        </div>
+      </td>
+    </tr>
+    }
+  </tbody>
+</nz-table>
+}

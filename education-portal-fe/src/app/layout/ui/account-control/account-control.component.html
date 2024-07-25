@@ -1,0 +1,20 @@
+@if (authStore.currentUser(); as currentUser) {
+<div class="account-control">
+  <p>{{ currentUser.username }}</p>
+  <div
+    nz-dropdown
+    nzTrigger="click"
+    [nzDropdownMenu]="menu"
+    [(nzVisible)]="isVisibleDropdown"
+  >
+    <nz-avatar nzIcon="user"></nz-avatar>
+  </div>
+</div>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="authStore.logout()">
+      <span nz-icon nzType="logout" nzTheme="outline"></span>Logout
+    </li>
+  </ul>
+</nz-dropdown-menu>
+}

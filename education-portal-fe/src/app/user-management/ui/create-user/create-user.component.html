@@ -1,0 +1,46 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Username</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input username">
+      <input type="text" nz-input formControlName="username" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Password</nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Password length must be greater or equal 6"
+    >
+      <input type="text" nz-input formControlName="password" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Role</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please select role">
+      <nz-select formControlName="role">
+        @for (item of userRoleOptions; track item) {
+        <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+        }
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="btn-group">
+    <button
+      nz-button
+      (click)="modalRef.close()"
+      [disabled]="createUserStore.status() === 'loading'"
+    >
+      Cancel
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      type="submit"
+      [disabled]="createUserStore.status() === 'loading'"
+    >
+      OK
+    </button>
+  </div>
+</form>

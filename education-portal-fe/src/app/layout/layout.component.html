@@ -1,0 +1,32 @@
+<nz-layout class="app-layout">
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <a routerLink="/">
+        <h1>Education Portal</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      @for (item of menu; track $index) {
+        <li nz-menu-item nzMatchRouter *appRole="item.acceptRoles">
+          <a [routerLink]="item.url">{{ item.title }}</a>
+        </li>
+      }
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <app-account-control></app-account-control>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

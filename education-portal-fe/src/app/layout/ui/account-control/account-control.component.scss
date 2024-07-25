@@ -1,0 +1,18 @@
+.account-control {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: 16px;
+
+  p {
+    margin: 0;
+  }
+  nz-avatar {
+    cursor: pointer;
+  }
+}
+
+
+span[nz-icon] {
+  margin-right: 8px;
+}

@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  button {
+    margin-left: auto;
+  }
+}
+
+nz-select {
+  width: 150px;
+}
